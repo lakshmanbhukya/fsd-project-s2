@@ -13,7 +13,7 @@ const App = () => {
 	// Fetch all products on mount
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/api/products")
+			.get(`${process.env.REACT_APP_API_URL}/api/products`)
 			.then((response) => setProducts(response.data))
 			.catch((error) => console.error("Error fetching products:", error));
 	}, []);
@@ -22,7 +22,7 @@ const App = () => {
 	const handleAddProduct = () => {
 		console.log("Add product function called");
 		axios
-			.post("http://localhost:5000/api/products", newProduct)
+			.post(`${process.env.REACT_APP_API_URL}/api/products`, newProduct)
 			.then((response) => {
 				setProducts([...products, response.data]);
 				setNewProduct({ name: "", description: "", image: "" });
@@ -33,7 +33,7 @@ const App = () => {
 	// Delete a product
 	const handleProductDelete = (productId) => {
 		axios
-			.delete(`http://localhost:5000/api/products/${productId}`)
+			.delete(`${process.env.REACT_APP_API_URL}/api/products/${productId}`)
 			.then((response) => {
 				console.log("Deleted Product:", response.data.deletedProduct);
 				const updatedProducts = products.filter(
@@ -49,7 +49,7 @@ const App = () => {
 	// Add a review for a product
 	const handleReviewSubmit = (productId, review) => {
 		axios
-			.post(`http://localhost:5000/api/products/${productId}/review`, review)
+			.post(`${process.env.REACT_APP_API_URL}/api/products/${productId}/review`, review)
 			.then((response) => {
 				const updatedProducts = products.map((product) =>
 					product._id === productId ? response.data : product
